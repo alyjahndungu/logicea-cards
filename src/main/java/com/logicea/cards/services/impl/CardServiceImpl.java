@@ -43,6 +43,22 @@ public class CardServiceImpl implements CardService {
         cardsRepository.delete(cards);
     }
 
+    @Override
+    public Cards updateCards(Long id, CardDto cardDto) {
+        Cards cards = getCardById(id);
+        cards.setName(cardDto.name());
+        cards.setDescription(cardDto.description());
+        cards.setColor(cardDto.color());
+        cards.setStatus(cards.getStatus());
+
+        return cardsRepository.save(cards);
+    }
+
+    @Override
+    public List<Cards> searchCards(String searchName) {
+        return cardsRepository.findCardsByNameContainsIgnoreCase(searchName);
+    }
+
     private Cards getCardById(Long id) {
         return cardsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No card found::" + id));

@@ -13,4 +13,6 @@ import java.util.Optional;
 @Repository
 public interface CardsRepository extends JpaRepository<Cards, Long> {
     List<Cards> findCardsByUsers(Users users);
+
+    List<Cards> findCardsByNameContainsIgnoreCase(String searchName);
 }

@@ -13,4 +13,8 @@ public interface CardService {
     List<Cards> adminGetAllCards(Users user);
 
     void deleteCard(Long id);
+
+    Cards updateCards(Long id, CardDto cardDto);
+
+    List<Cards> searchCards(String searchName);
 }

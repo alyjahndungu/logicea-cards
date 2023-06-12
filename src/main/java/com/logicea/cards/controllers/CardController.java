@@ -37,6 +37,17 @@ public class CardController {
         return ResponseHandler.generateResponse("Cards fetched success", HttpStatus.OK, cards);
     }
 
+    @GetMapping("search/{searchName}")
+    public ResponseEntity<Object> searchCards(@PathVariable String searchName) {
+        List<Cards> cards = cardService.searchCards(searchName);
+        return ResponseHandler.generateResponse("Cards fetched successfully", HttpStatus.OK, cards);
+    }
+
+    @PatchMapping (value = "{id}")
+    public ResponseEntity<Object> updateCards(@PathVariable Long id, @Valid @RequestBody CardDto cardDto) {
+        Cards cards = cardService.updateCards(id, cardDto);
+        return ResponseHandler.generateResponse("Cards updated successfully", HttpStatus.ACCEPTED, cards);
+    }
     @GetMapping(value = "admin")
     public ResponseEntity<Object> adminGetAllCards(Principal principal) {
         Users user = userService.getUser(principal);
