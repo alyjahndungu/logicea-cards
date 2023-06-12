@@ -3,6 +3,8 @@ package com.logicea.cards.services.impl;
 import com.logicea.cards.domain.dto.CardDto;
 import com.logicea.cards.domain.entities.Cards;
 import com.logicea.cards.domain.entities.Users;
+import com.logicea.cards.domain.enumeration.EStatus;
+import com.logicea.cards.domain.repositories.CardsRepository;
 import com.logicea.cards.services.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,19 +14,25 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CardServiceImpl implements CardService  {
+    private  final CardsRepository cardsRepository;
     @Override
     public Cards createCards(Users user, CardDto cardDto) {
-        return null;
+        Cards cards = Cards.builder().name(cardDto.name())
+                .description(cardDto.description())
+                .color(cardDto.color())
+                .status(String.valueOf(EStatus.TO_DO)).
+                users(user).build();
+        return cardsRepository.save(cards);
     }
 
     @Override
     public List<Cards> getCardsForSingleUser(Users user) {
-        return null;
+        return cardsRepository.findCardsByUsers(user);
     }
 
     @Override
     public List<Cards> getAllCards(Users user) {
-        return null;
+        return cardsRepository.findAll();
     }
 
 }

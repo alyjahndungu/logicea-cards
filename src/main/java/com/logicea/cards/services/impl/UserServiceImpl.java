@@ -1,7 +1,9 @@
 package com.logicea.cards.services.impl;
 
 import com.logicea.cards.domain.dto.LoginDto;
+import com.logicea.cards.domain.dto.UserDto;
 import com.logicea.cards.domain.entities.Users;
+import com.logicea.cards.domain.enumeration.ERole;
 import com.logicea.cards.domain.models.AuthResponse;
 import com.logicea.cards.domain.models.JWTUtils;
 import com.logicea.cards.domain.models.MyUserDetailService;
@@ -14,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -28,6 +31,15 @@ public class UserServiceImpl implements UserService {
     private final JWTUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
 
+
+    @Override
+    public Users addUsers(UserDto userDto) {
+        Users users = Users.builder().name(userDto.name())
+                .email(userDto.email())
+                .password(new BCryptPasswordEncoder().encode(userDto.password()))
+                .role(String.valueOf(ERole.ROLE_MEMBER)).build();
+        return userRepository.save(users);
+    }
 
     @Override
     public Users getUser(Principal principal) {
