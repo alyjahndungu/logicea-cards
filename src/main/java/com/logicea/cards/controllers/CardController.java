@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -34,5 +35,19 @@ public class CardController {
         Users user = userService.getUser(principal);
         List<Cards> cards = cardService.getCardsForSingleUser(user);
         return ResponseHandler.generateResponse("Cards fetched success", HttpStatus.OK, cards);
+    }
+
+    @GetMapping(value = "admin")
+    public ResponseEntity<Object> adminGetAllCards(Principal principal) {
+        Users user = userService.getUser(principal);
+        List<Cards> cards = cardService.adminGetAllCards(user);
+        return ResponseHandler.generateResponse("Cards fetched success", HttpStatus.OK, cards);
+    }
+
+    @DeleteMapping(value = "{id}")
+    public  ResponseEntity<Object> deleteCard(@PathVariable Long id){
+        cardService.deleteCard (id);
+        return ResponseHandler.generateResponse("Card deleted successfully", HttpStatus.ACCEPTED,
+        null);
     }
 }

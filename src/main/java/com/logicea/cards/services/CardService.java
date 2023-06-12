@@ -10,6 +10,7 @@ public interface CardService {
     Cards createCards(Users user, CardDto cardDto);
 
     List<Cards> getCardsForSingleUser(Users user);
-    List<Cards> getAllCards(Users user);
+    List<Cards> adminGetAllCards(Users user);
 
+    void deleteCard(Long id);
 }

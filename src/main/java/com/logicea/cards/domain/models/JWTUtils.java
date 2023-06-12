@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Component
 public class JWTUtils {
 
-    private final String SECRET_KEY = "Y9BP6VSJDOJZ4R8T3RFDZUXUXF5BVIBGVGJM0A7Z";
+    private final String SECRET_KEY = "Y9BP6VSJDOJZ4R8T3RFDZUXUXDOJZ4R8T3RFDF5BVIBGVGJM0A7ZXUXF5BVIBGVGJM0A7Z";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

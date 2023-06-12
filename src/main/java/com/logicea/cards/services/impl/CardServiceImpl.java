@@ -5,6 +5,7 @@ import com.logicea.cards.domain.entities.Cards;
 import com.logicea.cards.domain.entities.Users;
 import com.logicea.cards.domain.enumeration.EStatus;
 import com.logicea.cards.domain.repositories.CardsRepository;
+import com.logicea.cards.exceptions.NotFoundException;
 import com.logicea.cards.services.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CardServiceImpl implements CardService  {
-    private  final CardsRepository cardsRepository;
+public class CardServiceImpl implements CardService {
+    private final CardsRepository cardsRepository;
+
     @Override
     public Cards createCards(Users user, CardDto cardDto) {
         Cards cards = Cards.builder().name(cardDto.name())
@@ -31,8 +33,19 @@ public class CardServiceImpl implements CardService  {
     }
 
     @Override
-    public List<Cards> getAllCards(Users user) {
+    public List<Cards> adminGetAllCards(Users user) {
         return cardsRepository.findAll();
+    }
+
+    @Override
+    public void deleteCard(Long id) {
+        Cards cards = getCardById(id);
+        cardsRepository.delete(cards);
+    }
+
+    private Cards getCardById(Long id) {
+        return cardsRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No card found::" + id));
     }
 
 }

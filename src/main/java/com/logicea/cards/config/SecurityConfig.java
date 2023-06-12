@@ -1,5 +1,6 @@
 package com.logicea.cards.config;
 
+import com.logicea.cards.domain.enumeration.ERole;
 import com.logicea.cards.domain.models.AuthTokenFilter;
 import com.logicea.cards.domain.models.MyUserDetailService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class SecurityConfig {
         http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requestMatcherRegistry) -> requestMatcherRegistry
+                        .requestMatchers("/api/v1/cards/admin").hasAuthority(String.valueOf(ERole.ROLE_ADMIN))
                         .requestMatchers(
                                 "/api/v1/users/**",
                                 "/v2/api-docs",
