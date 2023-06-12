@@ -1,6 +1,8 @@
 package com.logicea.cards.controllers;
 
 import com.logicea.cards.domain.dto.LoginDto;
+import com.logicea.cards.domain.dto.UserDto;
+import com.logicea.cards.domain.entities.Users;
 import com.logicea.cards.domain.models.AuthResponse;
 import com.logicea.cards.handlers.ResponseHandler;
 import com.logicea.cards.services.UserService;
@@ -17,7 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 public class UserController {
-    private  final UserService userService;
+    private final UserService userService;
+
+    @PostMapping
+    public ResponseEntity<Object> addUser(@RequestBody UserDto userDto) {
+        Users user = userService.addUsers(userDto);
+        return ResponseHandler.generateResponse("User Added Successfully", HttpStatus.CREATED, user);
+    }
 
     @PostMapping(value = "/login")
     public ResponseEntity<Object> loginWithUsernameAndPassword(@RequestBody LoginDto loginDto) {
