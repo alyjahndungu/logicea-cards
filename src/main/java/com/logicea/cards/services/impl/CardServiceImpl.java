@@ -61,6 +61,11 @@ public class CardServiceImpl implements CardService {
         return cardsRepository.findCardsByNameContainsIgnoreCase(searchName);
     }
 
+    @Override
+    public Cards getCard(Users user, Long id) {
+        return cardsRepository.findCardsByUsersAndId(user, id);
+    }
+
     private Cards getCardById(Long id) {
         return cardsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No card found::" + id));

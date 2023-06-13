@@ -43,6 +43,14 @@ public class CardController {
         return ResponseHandler.generateResponse("Cards fetched success", HttpStatus.OK, cards);
     }
 
+    @Operation(summary = "Endpoint to fetch a single card related to  an individual user")
+    @GetMapping(value = "{id}")
+    public ResponseEntity<Object> getCard(Principal principal, @PathVariable Long id) {
+        Users user = userService.getUser(principal);
+        Cards card = cardService.getCard(user, id);
+        return ResponseHandler.generateResponse("Card fetched successfully", HttpStatus.OK, card);
+    }
+
     @Operation(summary = "Endpoint to search for cards")
     @GetMapping("search/{searchName}")
     public ResponseEntity<Object> searchCards(@PathVariable String searchName) {

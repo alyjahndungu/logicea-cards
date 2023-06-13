@@ -19,4 +19,6 @@ public interface CardService {
     Cards updateCards(Long id, CardDto cardDto);
 
     List<Cards> searchCards(String searchName);
+
+    Cards getCard(Users user, Long id);
 }

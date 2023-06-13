@@ -17,4 +17,5 @@ public interface CardsRepository extends JpaRepository<Cards, Long> {
     Page<Cards> findCardsByUsers(Users users, Pageable pageable);
 
     List<Cards> findCardsByNameContainsIgnoreCase(String searchName);
+    Cards findCardsByUsersAndId(Users users, Long id);
 }
