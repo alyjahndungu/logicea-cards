@@ -8,6 +8,10 @@ import com.logicea.cards.services.CardService;
 import com.logicea.cards.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,9 +35,9 @@ public class CardController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getCardsForSingleUser(Principal principal) {
+    public ResponseEntity<Object> getCardsForSingleUser(Principal principal,  @SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable) {
         Users user = userService.getUser(principal);
-        List<Cards> cards = cardService.getCardsForSingleUser(user);
+        Page<Cards> cards = cardService.getCardsForSingleUser(user, pageable);
         return ResponseHandler.generateResponse("Cards fetched success", HttpStatus.OK, cards);
     }
 
@@ -49,9 +53,8 @@ public class CardController {
         return ResponseHandler.generateResponse("Cards updated successfully", HttpStatus.ACCEPTED, cards);
     }
     @GetMapping(value = "admin")
-    public ResponseEntity<Object> adminGetAllCards(Principal principal) {
-        Users user = userService.getUser(principal);
-        List<Cards> cards = cardService.adminGetAllCards(user);
+    public ResponseEntity<Object> adminGetAllCards(@SortDefault.SortDefaults({@SortDefault(sort = "id", direction = Sort.Direction.DESC)}) Pageable pageable) {
+        Page<Cards> cards = cardService.adminGetAllCards(pageable);
         return ResponseHandler.generateResponse("Cards fetched success", HttpStatus.OK, cards);
     }
 

@@ -34,9 +34,9 @@ public class SecurityConfig {
         http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requestMatcherRegistry) -> requestMatcherRegistry
-                        .requestMatchers("/api/v1/cards/admin").hasAuthority(String.valueOf(ERole.ROLE_ADMIN))
                         .requestMatchers(
                                 "/api/v1/users/**",
+                                "/api/v1/auth/**",
                                 "/v2/api-docs",
                                 "/v3/api-docs",
                                 "/v3/api-docs/**",
@@ -46,8 +46,8 @@ public class SecurityConfig {
                                 "/configuration/security",
                                 "/swagger-ui/**",
                                 "/webjars/**",
-                                "/swagger-ui.html"
-                        ).permitAll()
+                                "/swagger-ui.html").permitAll()
+                        .requestMatchers("/api/v1/cards/admin").hasAuthority(String.valueOf(ERole.ROLE_ADMIN))
                         .anyRequest().authenticated()
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

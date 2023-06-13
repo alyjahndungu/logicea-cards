@@ -8,6 +8,8 @@ import com.logicea.cards.domain.repositories.CardsRepository;
 import com.logicea.cards.exceptions.NotFoundException;
 import com.logicea.cards.services.CardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,13 +30,13 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<Cards> getCardsForSingleUser(Users user) {
-        return cardsRepository.findCardsByUsers(user);
+    public Page<Cards> getCardsForSingleUser(Users user, Pageable pageable) {
+        return cardsRepository.findCardsByUsers(user, pageable);
     }
 
     @Override
-    public List<Cards> adminGetAllCards(Users user) {
-        return cardsRepository.findAll();
+    public Page<Cards> adminGetAllCards(Pageable pageable) {
+        return cardsRepository.findAll(pageable);
     }
 
     @Override
