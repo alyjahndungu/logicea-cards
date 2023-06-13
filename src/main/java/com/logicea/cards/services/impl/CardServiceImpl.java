@@ -24,7 +24,7 @@ public class CardServiceImpl implements CardService {
         Cards cards = Cards.builder().name(cardDto.name())
                 .description(cardDto.description())
                 .color(cardDto.color())
-                .status(String.valueOf(EStatus.TO_DO)).
+                .status(EStatus.TO_DO).
                 users(user).build();
         return cardsRepository.save(cards);
     }
@@ -51,7 +51,7 @@ public class CardServiceImpl implements CardService {
         cards.setName(cardDto.name());
         cards.setDescription(cardDto.description());
         cards.setColor(cardDto.color());
-        cards.setStatus(cards.getStatus());
+        cards.setStatus(cardDto.status());
 
         return cardsRepository.save(cards);
     }

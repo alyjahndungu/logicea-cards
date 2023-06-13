@@ -24,7 +24,7 @@ public class MyUserDetailService  implements UserDetailsService {
             throw new UsernameNotFoundException("Email was not found" + email);
         }
         return User.withUsername(user.get().getEmail()).password(user.get().getPassword()).disabled(false)
-                .authorities(String.valueOf(ERole.ROLE_MEMBER)).build();
+                .authorities(user.get().getRole()).build();
     }
 
 }

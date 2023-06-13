@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 
 public record CardDto(@NotEmpty String name, String description,
                       @Pattern(regexp = "^#[A-Fa-f0-9]{6}$", message = "Invalid color code")
-                      String color,   @Enumerated(EnumType.STRING)
+                      String color,
+                      @Enumerated(EnumType.STRING)
                       EStatus status) {
 }

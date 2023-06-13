@@ -2,6 +2,7 @@ package com.logicea.cards.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.logicea.cards.domain.enumeration.EStatus;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -28,7 +29,9 @@ public class Cards {
 
     private  String color;
 
-    private  String status;
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
